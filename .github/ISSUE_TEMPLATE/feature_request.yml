@@ -1,0 +1,27 @@
+name: Coverage or feature request
+description: Propose a new audit surface or workflow improvement
+title: "[Request]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: gap
+    attributes:
+      label: Audit gap
+      description: Which target type, vulnerability family, or workflow is missing?
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Security impact
+      description: What can the current skill miss or misclassify?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain how to add coverage without weakening read-only safety or portability.
+    validations:
+      required: true

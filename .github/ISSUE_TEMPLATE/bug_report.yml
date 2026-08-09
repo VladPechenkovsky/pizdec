@@ -1,0 +1,34 @@
+name: Bug report
+description: Report incorrect, unsafe, or unclear PIZDEC behavior
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not include secrets, private target code, or unredacted audit evidence. Use the Security policy for sensitive vulnerabilities.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What did PIZDEC instruct the agent to do incorrectly?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Agent and target shape
+      description: Name the agent/runtime and a sanitized target type. Do not attach private data.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Provide the smallest reproducible, fully redacted example.
