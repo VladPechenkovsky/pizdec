@@ -2,7 +2,7 @@
 
 *Find it before it finds you.*
 
-`PIZDEC` читается как «пиздец» и одновременно расшифровывается как **Project & Infrastructure Zero-trust Defense Exposure Check**. Название прямо описывает, во что может превратиться незамеченная уязвимость.
+`PIZDEC` читается как «пиздец» и одновременно расшифровывается как **Project & Infrastructure Zero-trust Defense Exposure Check**.
 
 [English version](README.md)
 
