@@ -1,0 +1,4 @@
+component: pricing
+entrypoint: internal.pricing
+external_input: false
+privileged: false

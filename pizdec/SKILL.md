@@ -147,6 +147,8 @@ Use this field order:
 - <Evidence>: <minimal concrete location or effective observation>
 - <Exploit prerequisites / Reachability>: <required access and whether the path is reachable>
 - <Risk>: <one plain-language sentence>
+- <Desired security outcome>: <the observable safe state required, without implementation steps>
+- <Acceptance criteria>: <read-only facts a future agent can verify to confirm the risk is removed without breaking required access or behavior>
 
 ## <What I did not verify>
 - <deliberate mode exclusion or material limitation that could change the conclusion>
@@ -159,6 +161,8 @@ Use this field order:
 ```
 
 Generate the final follow-up examples from the actual human-readable finding titles. Finding IDs remain stable technical anchors for agents, but never require the user to type them. A future agent must map natural-language references to findings, restate any ambiguous selection, revalidate current state, and obtain whatever current approval its action requires.
+
+Describe desired outcomes and acceptance criteria as end states, not remediation. Do not name commands, patches, configuration-edit sequences, or a preferred implementation unless the user starts a separate fixing task. Include a functional or access-preservation condition when a security change could cause lockout, downtime, or loss of required behavior.
 
 Interpret the dynamic/external field as follows: `NOT_AUTHORIZED` means those checks were outside authorization; `NOT_PERFORMED` means authorized but unavailable or not run; `LIMITED` means only named authorized checks completed; `COMPLETE_WITHIN_AUTHORIZATION` means every explicitly authorized dynamic/external check completed without implying broader testing.
 

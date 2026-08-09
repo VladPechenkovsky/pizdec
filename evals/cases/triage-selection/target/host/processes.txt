@@ -1,0 +1,5 @@
+NAME                 CPU_PERCENT  USER       PROJECT
+batch-worker         86           batch      projects/batch-worker
+public-admin-api     3            app        projects/public-admin-api
+message-runner       1            runner     projects/message-runner
+reporting-worker     1            reports    projects/reporting-worker

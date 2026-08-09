@@ -1,0 +1,15 @@
+agent:
+  inbox_source: public-support-email
+  memory_write: automatic
+tools:
+  shell:
+    enabled: true
+    auto_approve: true
+    argument_policy: unrestricted
+    filesystem: /
+    inherit_environment: true
+  browser:
+    profile: operator-default
+    authenticated_sessions: true
+secrets:
+  deployment_token: agent-training-secret-b401d4c8a69e4fb1

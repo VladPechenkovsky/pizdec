@@ -1,0 +1,4 @@
+0.0.0.0:443 public-admin-api public reverse proxy
+0.0.0.0:8443 message-runner direct webhook listener
+127.0.0.1:9000 batch-worker local metrics
+127.0.0.1:9100 node-metrics local metrics

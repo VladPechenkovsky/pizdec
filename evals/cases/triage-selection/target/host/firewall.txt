@@ -1,0 +1,1 @@
+Snapshot unavailable: effective firewall state requires live host access.

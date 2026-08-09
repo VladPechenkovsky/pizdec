@@ -1,0 +1,4 @@
+listener: 0.0.0.0:8443
+public_webhook: true
+signature_verification: disabled
+auto_approve_jobs: true

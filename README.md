@@ -8,7 +8,7 @@
 
 PIZDEC is a platform-neutral, read-only security-audit skill for AI coding agents. It instructs an agent to connect code to its deployed environment, inspect the selected depth systematically, and produce a short evidence-based report for both a human and a future agent.
 
-PIZDEC does not fix anything. It contains no installer, executable scripts, telemetry, remote fetches, universal shell commands, or prewritten remediation.
+PIZDEC does not fix anything. The distributable `pizdec/` directory contains no installer, executable audit scripts, telemetry, remote fetches, universal shell commands, or prewritten remediation. The repository's separate `evals/` directory includes only a read-only fixture validator.
 
 ## What it audits
 
@@ -42,7 +42,7 @@ Use whichever method your agent supports:
 2. Import the repository subdirectory if the platform supports skills from Git repositories.
 3. If the platform has no skill registry, provide `pizdec/SKILL.md` and the applicable referenced files with your audit request.
 
-PIZDEC uses Markdown instructions and relative references only. It intentionally avoids platform-specific commands. Compatibility depends on whether the host agent can read the files, inspect the authorized target, preserve task state, and obey the safety boundary; automatic skill discovery is platform-specific and is not guaranteed.
+PIZDEC's behavior contract uses Markdown instructions and relative references only. The optional [`agents/openai.yaml`](pizdec/agents/openai.yaml) adds display metadata for ChatGPT and Codex but no behavior or tool dependency; other agents can ignore it. PIZDEC intentionally avoids platform-specific commands. Compatibility depends on whether the host agent can read the files, inspect the authorized target, preserve task state, and obey the safety boundary; automatic skill discovery is platform-specific and is not guaranteed.
 
 ## Use it
 
@@ -72,6 +72,7 @@ The terminal report contains:
 
 - What was checked and exact reviewed/discovered coverage required by the selected mode.
 - What was found, with severity, confidence, minimal evidence, reachability, exploit prerequisites, and plain-language risk.
+- The desired safe state and observable acceptance criteria, without commands or implementation steps.
 - Deliberate mode exclusions and anything else not verified.
 - Local analyzers used and known vulnerability-database freshness.
 - Whether dynamic or external validation was authorized and performed.
@@ -79,7 +80,11 @@ The terminal report contains:
 
 Finding IDs such as `F-001` remain stable agent anchors, but the user never has to type them. Natural requests such as “Explain what is most dangerous”, “Prepare a safe plan for the SSH password problem”, or “Fix the critical findings one by one and ask before each change” are mapped back to the findings by the next agent.
 
+For example, an SSH finding can require the outcome “remote root password login is unavailable” and the acceptance criterion “effective SSH configuration rejects root password authentication while verified alternative administrative access still works.” That states what must be true without telling an agent how to edit the system.
+
 Completion means only that the selected authorized safe read-only contract was completed. It is not a promise that exploitation, target-code execution, unrestricted external scanning, runtime-only behavior, or every current CVE was tested.
+
+The intended effort grows sharply by mode: Triage is a first pass, Full is substantial work across every active security-connected surface, and Total is an exhaustive file-by-file audit that may require multiple continuations.
 
 ## Safety model
 
@@ -92,6 +97,12 @@ Completion means only that the selected authorized safe read-only contract was c
 
 Read the complete behavior contract in [`pizdec/SKILL.md`](pizdec/SKILL.md).
 
+## Public evals
+
+The [`evals/`](evals/) directory contains seven synthetic forward-test targets covering API authorization and injection, Docker exposure, a Telegram-to-root-shell chain, agent prompt injection, Triage project selection, scanner false positives, and continuation capsules.
+
+Each case separates `target/` from its hidden-during-run `expected.md`. Run a fresh agent against only the isolated target, then grade the saved report with the public [rubric](evals/RUBRIC.md). The fixtures are inert text and contain no real credentials; never execute them. Structural validation is available through the read-only `evals/validate_evals.py` script.
+
 ## Repository layout
 
 ```text
@@ -101,8 +112,11 @@ Read the complete behavior contract in [`pizdec/SKILL.md`](pizdec/SKILL.md).
 |-- SECURITY.md
 |-- CONTRIBUTING.md
 |-- LICENSE
+|-- evals/
 `-- pizdec/
     |-- SKILL.md
+    |-- agents/
+    |   `-- openai.yaml
     `-- references/
 ```
 

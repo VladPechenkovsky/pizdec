@@ -1,0 +1,4 @@
+component: catalog
+entrypoint: internal.catalog
+external_input: false
+privileged: false

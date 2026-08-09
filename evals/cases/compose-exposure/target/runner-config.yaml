@@ -1,0 +1,10 @@
+server:
+  listen: 0.0.0.0:9000
+  authentication: disabled
+tools:
+  docker: enabled
+  host_filesystem_root: /host
+  allowed_operations:
+    - run_container
+    - remove_container
+    - write_file

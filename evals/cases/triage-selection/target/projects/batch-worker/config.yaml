@@ -1,0 +1,4 @@
+listener: 127.0.0.1:9000
+external_triggers: false
+secrets: none
+expected_cpu_percent: 85

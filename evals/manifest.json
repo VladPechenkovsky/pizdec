@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "fastapi-authz",
+      "mode": "FULL",
+      "prompt": "cases/fastapi-authz/prompt.md",
+      "target": "cases/fastapi-authz/target",
+      "oracle": "cases/fastapi-authz/expected.md",
+      "min_target_files": 3
+    },
+    {
+      "id": "compose-exposure",
+      "mode": "FULL",
+      "prompt": "cases/compose-exposure/prompt.md",
+      "target": "cases/compose-exposure/target",
+      "oracle": "cases/compose-exposure/expected.md",
+      "min_target_files": 2
+    },
+    {
+      "id": "telegram-root-shell",
+      "mode": "FULL",
+      "prompt": "cases/telegram-root-shell/prompt.md",
+      "target": "cases/telegram-root-shell/target",
+      "oracle": "cases/telegram-root-shell/expected.md",
+      "min_target_files": 3
+    },
+    {
+      "id": "agent-prompt-shell",
+      "mode": "FULL",
+      "prompt": "cases/agent-prompt-shell/prompt.md",
+      "target": "cases/agent-prompt-shell/target",
+      "oracle": "cases/agent-prompt-shell/expected.md",
+      "min_target_files": 3
+    },
+    {
+      "id": "triage-selection",
+      "mode": "TRIAGE",
+      "prompt": "cases/triage-selection/prompt.md",
+      "target": "cases/triage-selection/target",
+      "oracle": "cases/triage-selection/expected.md",
+      "min_target_files": 8
+    },
+    {
+      "id": "scanner-false-positives",
+      "mode": "FULL",
+      "prompt": "cases/scanner-false-positives/prompt.md",
+      "target": "cases/scanner-false-positives/target",
+      "oracle": "cases/scanner-false-positives/expected.md",
+      "min_target_files": 4
+    },
+    {
+      "id": "continuation-capsule",
+      "mode": "TOTAL",
+      "prompt": "cases/continuation-capsule/prompt.md",
+      "resume_prompt": "cases/continuation-capsule/resume-prompt.md",
+      "target": "cases/continuation-capsule/target",
+      "oracle": "cases/continuation-capsule/expected.md",
+      "min_target_files": 12
+    }
+  ]
+}

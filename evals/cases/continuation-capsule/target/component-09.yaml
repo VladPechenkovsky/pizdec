@@ -1,0 +1,4 @@
+component: archive
+entrypoint: internal.archive
+external_input: false
+privileged: false

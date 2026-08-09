@@ -1,0 +1,4 @@
+component: metrics
+entrypoint: internal.metrics
+external_input: false
+privileged: false

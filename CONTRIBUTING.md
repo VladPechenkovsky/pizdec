@@ -26,7 +26,8 @@ Proposals that intentionally change an invariant must explain the threat model, 
 4. Check every Markdown link and ensure all referenced profiles exist.
 5. Check that the distributable directory contains no credentials, personal data, audit artifacts, executable files, or command-like installers.
 6. Validate the skill with your platform's skill validator when one is available.
-7. If behavior changed, include a sanitized example showing the request, relevant target shape, and resulting report fields. Never attach real private target data.
+7. Run `python evals/validate_evals.py` when eval fixtures or behavior contracts change.
+8. If behavior changed, add or update a synthetic eval case and record a sanitized forward-test result when practical. Never attach real private target data.
 
 ## Pull request description
 

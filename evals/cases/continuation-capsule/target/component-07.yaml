@@ -1,0 +1,4 @@
+component: cleanup
+entrypoint: internal.cleanup
+external_input: false
+privileged: false

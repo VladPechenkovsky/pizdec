@@ -1,0 +1,4 @@
+component: exports
+entrypoint: internal.exports
+external_input: false
+privileged: false

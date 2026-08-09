@@ -1,0 +1,9 @@
+[
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Generic API key",
+    "File": "docs/.env.example",
+    "StartLine": 1,
+    "Secret": "YOUR_API_KEY_HERE"
+  }
+]

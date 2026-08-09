@@ -1,0 +1,4 @@
+component: reporting
+entrypoint: internal.reporting
+external_input: false
+privileged: false

@@ -1,0 +1,4 @@
+component: notifications
+entrypoint: internal.notifications
+external_input: false
+privileged: false

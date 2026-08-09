@@ -18,3 +18,7 @@ Describe the exact behavior before and after.
 ## Validation
 
 List the structural validation and any sanitized behavioral test performed.
+
+- [ ] `quick_validate.py` passed for `pizdec/`.
+- [ ] `python evals/validate_evals.py` passed.
+- [ ] Relevant forward evals were run, or the reason they were not run is stated.

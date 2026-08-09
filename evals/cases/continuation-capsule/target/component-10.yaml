@@ -1,0 +1,4 @@
+component: scheduler
+entrypoint: internal.scheduler
+external_input: false
+privileged: false

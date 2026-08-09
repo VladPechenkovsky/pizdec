@@ -1,0 +1,4 @@
+service:
+  entrypoint: src.safe:find_user
+  public_listener: false
+  runtime_secrets_from: external-secret-store

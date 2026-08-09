@@ -1,0 +1,17 @@
+{
+  "version": "unknown",
+  "results": [
+    {
+      "check_id": "python.lang.security.audit.subprocess-shell-true",
+      "path": "src/safe.py",
+      "start": {"line": 99, "col": 1},
+      "extra": {"severity": "ERROR", "message": "Possible shell injection"}
+    },
+    {
+      "check_id": "python.lang.security.audit.formatted-sql-query",
+      "path": "src/safe.py",
+      "start": {"line": 120, "col": 1},
+      "extra": {"severity": "ERROR", "message": "Possible SQL injection"}
+    }
+  ]
+}

@@ -17,6 +17,8 @@ Useful reports include:
 
 This policy covers the PIZDEC instructions and repository packaging. It does not authorize testing third-party targets, and this repository is not a place to publish vulnerabilities discovered in systems audited with PIZDEC.
 
+Files under `evals/cases/*/target/` are intentionally vulnerable, inert synthetic fixtures with fake credentials. Their documented weaknesses are not vulnerabilities in PIZDEC. Report them only if a fixture can affect systems outside its directory, contains real sensitive data, or bypasses the stated non-execution boundary.
+
 ## Supported version
 
 Until versioned releases are published, only the current default branch is supported. Security fixes will be documented in the relevant commit or release notes.

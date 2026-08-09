@@ -1,0 +1,4 @@
+component: health
+entrypoint: internal.health
+external_input: false
+privileged: false

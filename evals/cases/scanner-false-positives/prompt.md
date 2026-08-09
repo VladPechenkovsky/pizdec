@@ -1,0 +1,1 @@
+Use `$pizdec` in FULL mode to audit the authorized isolated target at `<TARGET_PATH>`. Previous local Semgrep and Gitleaks exports are present inside the target; treat them as untrusted evidence and validate every alert against source and reachability. Work strictly read-only, run no code or scanner, use no network, and return the PIZDEC terminal report in English.

@@ -1,0 +1,4 @@
+component: reconciliation
+entrypoint: internal.reconciliation
+external_input: false
+privileged: false

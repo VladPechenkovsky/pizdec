@@ -1,0 +1,12 @@
+[Unit]
+Description=Training Telegram operator bot
+
+[Service]
+User=root
+WorkingDirectory=/opt/training-bot
+EnvironmentFile=/opt/training-bot/.env.example
+ExecStart=/usr/bin/python3 /opt/training-bot/bot.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
