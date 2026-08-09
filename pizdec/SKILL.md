@@ -118,39 +118,48 @@ Use [coverage.md](references/coverage.md) literally. A completion status means o
 
 ## Report for a human and the next agent
 
-Write in the user's language and translate visible labels. Keep it concise; omit chain-of-thought, raw command transcripts, secret values, generic hardening lists, remediation commands, patches, and implementation sequences.
+Write for the system owner first and the next agent second. Use the user's language and translate every visible label. Keep it concise and easy to scan; omit chain-of-thought, raw command transcripts, secret values, generic hardening lists, remediation commands, patches, and implementation sequences.
+
+Lead with the conclusion, finding counts, and no more than five immediate priorities. Do not begin with a wall of machine metadata. Do not format finding titles as `[F-001][HIGH]` or turn every fact into a label-value bullet. Keep stable IDs and machine values on one quiet metadata line beneath a human-readable title.
 
 Use this field order:
 
 ```markdown
-# <localized security audit title>
+# <PIZDEC: short overall conclusion>
 
-<Target>: <authorized target>
-<Mode>: <TRIAGE, FULL, or TOTAL>
-<Snapshot>: <audit time and target/environment identifier>
-<Coverage>: <TRIAGE_COMPLETE, FULL_COMPLETE, COMPLETE_READ_ONLY, or PARTIAL_READ_ONLY; listeners reviewed/discovered; containers reviewed/discovered; projects reviewed/discovered; first-party files reviewed/discovered when enumerated; deliberate mode exclusions; critical gaps>
-<Local analyzers>: <tools and versions used, database freshness when known, or NONE>
-<Dynamic/external validation>: <NOT_AUTHORIZED, NOT_PERFORMED, LIMITED, or COMPLETE_WITHIN_AUTHORIZATION; concise scope>
-<Result>: <one sentence consistent with mode and coverage>
-<Changes>: NOT_PERFORMED; no commands, patches, or remediation plan generated
-<Stop condition>: <NONE, or the allowed terminal code with evidence and why continuation is unavailable>
+<One plain-language result sentence consistent with the selected mode and coverage.>
+<Found>: <critical count>, <high count>, <medium count>, <low count>.
+<Changes>: <none; this was a read-only audit>.
+
+## <What needs attention first>
+1. <human finding title> — <one short reason it has priority>
+2. <up to five priorities; omit this section when there are no confirmed findings>
+
+## <Problems found>
+
+### 1. <plain-language finding title> — <localized severity>
+<Code>: F-001 · <Severity>: HIGH · <Confidence>: HIGH
+
+**<Problem>**
+<The unsafe condition and minimally affected asset, in one or two sentences.>
+
+**<Why this is confirmed>**
+- <Minimal concrete effective observation or location.>
+- <Required access, prerequisite, or reachability only when material. Use no more than three evidence bullets unless the finding cannot be understood otherwise.>
+
+**<What can happen>**
+<One plain-language impact sentence.>
+
+**<What needs to be done>**
+<The observable desired security outcome, not commands or implementation steps.>
+
+**<How to tell it is fixed>**
+<Read-only acceptance facts that confirm the risk is removed while required access or behavior still works.>
 
 ## <What I checked>
-- <major surface and coverage>
+- <major surfaces in short grouped bullets>
 
-## <What I found>
-
-### [F-001][SEVERITY] <plain-language finding title>
-- <Status>: CONFIRMED
-- <Confidence>: <HIGH, MEDIUM, or LOW>
-- <Affected>: <minimal assets, services, files, or trust boundaries>
-- <Evidence>: <minimal concrete location or effective observation>
-- <Exploit prerequisites / Reachability>: <required access and whether the path is reachable>
-- <Risk>: <one plain-language sentence>
-- <Desired security outcome>: <the observable safe state required, without implementation steps>
-- <Acceptance criteria>: <read-only facts a future agent can verify to confirm the risk is removed without breaking required access or behavior>
-
-## <What I did not verify>
+## <What I did not check>
 - <deliberate mode exclusion or material limitation that could change the conclusion>
 
 ## <What you can ask next>
@@ -158,11 +167,25 @@ Use this field order:
 - “Prepare a safe remediation plan for all critical findings, but change nothing.”
 - “Start with <human finding title>; ask before making any change.”
 - “Fix the critical findings one by one and request confirmation before each change.”
+
+## <Technical audit details>
+- <Target>: <authorized target>
+- <Mode>: <TRIAGE, FULL, or TOTAL>
+- <Snapshot>: <audit time and target/environment identifier>
+- <Coverage>: <TRIAGE_COMPLETE, FULL_COMPLETE, COMPLETE_READ_ONLY, or PARTIAL_READ_ONLY; listeners reviewed/discovered; containers reviewed/discovered; projects reviewed/discovered; first-party files reviewed/discovered when enumerated; deliberate mode exclusions; critical gaps>
+- <Local analyzers>: <tools and versions used, database freshness when known, or NONE>
+- <Dynamic/external validation>: <NOT_AUTHORIZED, NOT_PERFORMED, LIMITED, or COMPLETE_WITHIN_AUTHORIZATION; concise scope>
+- <Changes>: NOT_PERFORMED
+- <Stop condition>: <NONE, or the allowed terminal code with evidence and why continuation is unavailable>
 ```
 
 Generate the final follow-up examples from the actual human-readable finding titles. Finding IDs remain stable technical anchors for agents, but never require the user to type them. A future agent must map natural-language references to findings, restate any ambiguous selection, revalidate current state, and obtain whatever current approval its action requires.
 
-Describe desired outcomes and acceptance criteria as end states, not remediation. Do not name commands, patches, configuration-edit sequences, or a preferred implementation unless the user starts a separate fixing task. Include a functional or access-preservation condition when a security change could cause lockout, downtime, or loss of required behavior.
+Use the visible “What needs to be done” block only for the desired safe end state. Use “How to tell it is fixed” for acceptance criteria. Do not name commands, patches, configuration-edit sequences, or a preferred implementation unless the user starts a separate fixing task. Include a functional or access-preservation condition when a security change could cause lockout, downtime, or loss of required behavior.
+
+Every finding in the main report is confirmed; do not repeat a visible `Status: CONFIRMED` line. Incorporate the affected asset, exploit prerequisites, and reachability into the problem, evidence, or impact prose instead of adding more mandatory fields. If technical detail is useful only to a future agent, keep it short and subordinate to the human explanation.
+
+When no findings are confirmed, say so without the empty priorities or problems sections. When coverage is partial, lead with “audit incomplete” and never imply that the unchecked area is safe.
 
 Interpret the dynamic/external field as follows: `NOT_AUTHORIZED` means those checks were outside authorization; `NOT_PERFORMED` means authorized but unavailable or not run; `LIMITED` means only named authorized checks completed; `COMPLETE_WITHIN_AUTHORIZATION` means every explicitly authorized dynamic/external check completed without implying broader testing.
 

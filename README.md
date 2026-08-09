@@ -68,19 +68,19 @@ It never installs or updates them, starts a scanner service or container, upload
 
 ## Report contract
 
-The terminal report contains:
+The terminal report is human-first. It opens with one plain-language conclusion, severity counts, and at most five priorities. Each confirmed problem then uses the same scan-friendly structure:
 
-- What was checked and exact reviewed/discovered coverage required by the selected mode.
-- What was found, with severity, confidence, minimal evidence, reachability, exploit prerequisites, and plain-language risk.
-- The desired safe state and observable acceptance criteria, without commands or implementation steps.
-- Deliberate mode exclusions and anything else not verified.
-- Local analyzers used and known vulnerability-database freshness.
-- Whether dynamic or external validation was authorized and performed.
-- A short “What you can ask next” section generated from human-readable finding titles.
+1. **Problem** — the unsafe condition.
+2. **Why this is confirmed** — minimal evidence, including reachability or prerequisites when material.
+3. **What can happen** — the practical risk.
+4. **What needs to be done** — the desired safe state, not an implementation procedure.
+5. **How to tell it is fixed** — observable acceptance criteria that preserve required behavior.
+
+Stable finding IDs, confidence, exact reviewed/discovered counts, analyzer versions, exclusions, external-validation status, and other handoff details remain in compact metadata or a technical block at the end. They no longer dominate the first screen. A short “What you can ask next” section is generated from the actual human-readable finding titles.
 
 Finding IDs such as `F-001` remain stable agent anchors, but the user never has to type them. Natural requests such as “Explain what is most dangerous”, “Prepare a safe plan for the SSH password problem”, or “Fix the critical findings one by one and ask before each change” are mapped back to the findings by the next agent.
 
-For example, an SSH finding can require the outcome “remote root password login is unavailable” and the acceptance criterion “effective SSH configuration rejects root password authentication while verified alternative administrative access still works.” That states what must be true without telling an agent how to edit the system.
+For example, an SSH finding can say under “What needs to be done” that “remote root password login is unavailable”, and under “How to tell it is fixed” that “effective SSH configuration rejects root password authentication while verified alternative administrative access still works.” That states what must be true without telling an agent how to edit the system.
 
 Completion means only that the selected authorized safe read-only contract was completed. It is not a promise that exploitation, target-code execution, unrestricted external scanning, runtime-only behavior, or every current CVE was tested.
 
