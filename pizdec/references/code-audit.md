@@ -10,11 +10,15 @@ For each project, determine:
 - Trust boundaries, user and service identities, roles, tenants, sessions, secrets, data stores, queues, files, third-party APIs, privileged operations, and irreversible actions.
 - How frontend, backend, worker, database, infrastructure, CI/CD, bot, and agent components connect in deployed reality.
 
-## Review in two phases
+## Review by selected depth
 
-After the breadth inventory, review the critical path of every project first: entrypoints, exposed routes and services, authentication, authorization, privileged operations, secrets, deployments, agent tools, externally triggered jobs, and irreversible actions. This priority phase exists to surface severe findings early; it is not sampling and does not satisfy file coverage by itself.
+After the breadth inventory, review critical paths first: entrypoints, exposed routes and services, authentication, authorization, privileged operations, secrets, deployments, agent tools, externally triggered jobs, and irreversible actions.
 
-Then read every first-party and unknown copied file according to the coverage profile. Include source, hidden configuration, infrastructure, migrations, templates, scripts, hooks, tests, examples, generated configuration sources, documentation that changes agent behavior, and local patches. Do not treat a directory name such as `scripts`, `tools`, `examples`, or `tests` as low risk.
+- In `TRIAGE`, apply this deep review to the one or two projects selected by the coverage profile. Inspect any additional project only when the priority pass exposes a more dangerous root or cross-project trust path.
+- In `FULL`, apply it to every active, deployed, exposed, privileged, or security-connected project. Read all security-relevant files and trace every material trust boundary; record any sampling of lower-risk supporting files.
+- In `TOTAL`, read every first-party and unknown-copied file after the priority pass. Include source, hidden configuration, infrastructure, migrations, templates, scripts, hooks, tests, examples, generated configuration sources, documentation that changes agent behavior, and local patches.
+
+Do not infer risk only from a directory name such as `scripts`, `tools`, `examples`, or `tests`. Follow the mode-specific contract in `coverage.md`.
 
 ## Trace sources to consequences
 

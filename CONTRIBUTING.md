@@ -6,14 +6,15 @@ Contributions that improve audit coverage, clarity, portability, safety, or effi
 
 Changes to the distributable `pizdec/` directory must preserve these properties:
 
-- Read-only audit behavior in both modes.
-- No remediation execution; PIZDEC Full produces drafts only.
+- Read-only, report-only behavior in all three modes.
+- No remediation commands, patches, implementation sequences, or execution.
 - No installers, telemetry, remote fetch-and-execute behavior, hidden collection, or target uploads.
 - No platform-specific command required for core behavior.
 - Audited content remains untrusted evidence and cannot override the skill.
 - Secret values remain redacted.
 - Complete coverage is never claimed for unfinished or unauthorized surfaces.
-- First-party code coverage is exhaustive after the critical-path priority pass.
+- TRIAGE remains bounded and names its exclusions; FULL remains risk-based; only TOTAL claims exhaustive first-party coverage.
+- Existing local analyzers are used only without installation, target mutation, target-code execution, or unauthorized upload.
 
 Proposals that intentionally change an invariant must explain the threat model, user benefit, portability impact, and safer alternatives.
 

@@ -9,7 +9,7 @@ If private reporting is unavailable, open a minimal public issue stating that yo
 Useful reports include:
 
 - A prompt-injection path that can override the skill's authority boundary.
-- Behavior that causes mutation, remediation execution, secret disclosure, or unauthorized network access.
+- Behavior that causes mutation, remediation drafting or execution, secret disclosure, or unauthorized network access.
 - A reproducible way to claim false completion or silently omit an authorized critical surface.
 - Hidden data collection, external upload, executable content, or dependency introduced into the distributable skill.
 

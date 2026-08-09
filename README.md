@@ -1,14 +1,14 @@
-# PIZDEC
-
-**Project & Infrastructure Zero-trust Defense Exposure Check**
+# PIZDEC — Project & Infrastructure Zero-trust Defense Exposure Check
 
 *Find it before it finds you.*
 
+`PIZDEC` is both the acronym above and a deliberate transliteration of the Russian word «пиздец»: what an overlooked security exposure can turn into.
+
 [Русская версия](README.ru.md)
 
-PIZDEC is a platform-neutral security-audit skill for AI coding agents. It instructs an agent to inspect an authorized project or host deeply, connect code to its deployed environment, and produce a short evidence-based report for both a human and a future fixing agent.
+PIZDEC is a platform-neutral, read-only security-audit skill for AI coding agents. It instructs an agent to connect code to its deployed environment, inspect the selected depth systematically, and produce a short evidence-based report for both a human and a future agent.
 
-PIZDEC does not fix anything by itself. It does not contain an installer, executable scripts, telemetry, remote fetches, or universal shell commands.
+PIZDEC does not fix anything. It contains no installer, executable scripts, telemetry, remote fetches, universal shell commands, or prewritten remediation.
 
 ## What it audits
 
@@ -20,16 +20,17 @@ PIZDEC does not fix anything by itself. It does not contain an installer, execut
 - CI/CD, dependencies, package lifecycle, Git exposure, and software supply chain.
 - AI agents, prompts, memory, skills, plugins, MCP tools, browser control, and excessive agency.
 
-The audit starts with breadth discovery, checks the most dangerous trust paths early, and then completes exhaustive read-only review of first-party files and applicable infrastructure surfaces.
+Every mode starts with breadth discovery and checks dangerous trust paths early. The selected mode controls how far code and lower-risk surfaces are reviewed after that.
 
 ## Modes
 
-| User-facing mode | Machine mode | Result | Changes the target? |
-|---|---|---|---|
-| PIZDEC Safety | `SAFETY` | Findings, evidence, recommendations, and acceptance criteria | No |
-| PIZDEC Full | `FULL_DRAFT` | The same audit plus snapshot-bound remediation drafts for confirmed, high-confidence Critical/High findings | No |
+| User-facing mode | Machine mode | Intended use | Coverage result | Changes the target? |
+|---|---|---|---|---|
+| PIZDEC Triage | `TRIAGE` | Fast check of exposed infrastructure, identities, ports, containers, agents, bots, and one or two risk-ranked projects | `TRIAGE_COMPLETE` or `PARTIAL_READ_ONLY` | No |
+| PIZDEC Full | `FULL` | Comprehensive risk-based review of every major surface and active/security-connected project | `FULL_COMPLETE` or `PARTIAL_READ_ONLY` | No |
+| PIZDEC Total | `TOTAL` | Exhaustive whole-target review, including every first-party file and inactive project | `COMPLETE_READ_ONLY` or `PARTIAL_READ_ONLY` | No |
 
-Neither mode authorizes execution. Any fix requires a separate, current user approval, and the executing agent must revalidate the environment first.
+`FULL` is the default when the user does not name a mode. `TOTAL` must be requested explicitly. Every mode reports evidence only: no commands, patches, implementation sequence, or automatic remediation is generated.
 
 ## Install or provide the skill
 
@@ -39,44 +40,55 @@ Use whichever method your agent supports:
 
 1. Copy the `pizdec/` directory into the agent's skills or instructions directory.
 2. Import the repository subdirectory if the platform supports skills from Git repositories.
-3. If the platform has no skill registry, provide `pizdec/SKILL.md` and the applicable referenced files to the agent with your audit request.
+3. If the platform has no skill registry, provide `pizdec/SKILL.md` and the applicable referenced files with your audit request.
 
-PIZDEC uses Markdown instructions and relative references only. It intentionally avoids platform-specific tool names and installation commands. Compatibility depends on whether the host agent can read the files, inspect the authorized target, preserve task state, and obey the safety boundary; automatic skill discovery is platform-specific and is not guaranteed.
+PIZDEC uses Markdown instructions and relative references only. It intentionally avoids platform-specific commands. Compatibility depends on whether the host agent can read the files, inspect the authorized target, preserve task state, and obey the safety boundary; automatic skill discovery is platform-specific and is not guaranteed.
 
 ## Use it
 
-Safety audit example:
+Fast first pass:
 
-> Use PIZDEC in Safety mode to audit this entire authorized server. Work read-only, use relevant trusted conversation context and memory, inspect every discovered first-party project, and return the PIZDEC report. Do not change anything.
+> Use PIZDEC Triage to inspect this authorized server. Check the host, SSH, identities, exposed ports, containers, databases, bots, agents, and CI/CD, then deeply review one or two highest-risk projects. Work read-only and return the PIZDEC report.
 
-Remediation-ready audit example:
+Comprehensive audit:
 
-> Use PIZDEC Full to audit this authorized project and its deployment environment. Draft remediation only where PIZDEC permits it. Do not execute any fix.
+> Use PIZDEC Full to audit this authorized project and its deployment environment. Cover every major surface and active project using risk-based review. Report evidence only and change nothing.
 
-State the authorized scope clearly. For external-surface or current-vulnerability verification, explicitly identify which destinations and network actions are authorized. Without that permission, PIZDEC remains local and read-only.
+Exhaustive audit:
+
+> Use PIZDEC Total to audit this entire authorized server, including every first-party project and file. Continue in safe read-only batches until the PIZDEC completion gate is satisfied or a proven terminal condition prevents it.
+
+State the authorized scope clearly. For external-surface or current-vulnerability verification, explicitly identify permitted destinations and network actions. Without that permission, PIZDEC remains local and read-only.
+
+## Existing local analyzers
+
+PIZDEC may use already installed local secret, static-code, dependency, container, infrastructure, configuration, or vulnerability analyzers when they can operate safely and read-only.
+
+It never installs or updates them, starts a scanner service or container, uploads target data, runs project lifecycle code, or enables auto-fix. Tool output is treated as a lead and validated against source, effective configuration, deployment state, and reachability before it becomes a finding.
 
 ## Report contract
 
-The terminal report is deliberately short:
+The terminal report contains:
 
-- What was checked and exact reviewed/discovered coverage.
-- What was found, with severity, confidence, minimal evidence, reachability, and exploit prerequisites.
-- A decision-ready recommendation and observable acceptance criteria for each root cause.
-- What was not verified and why.
+- What was checked and exact reviewed/discovered coverage required by the selected mode.
+- What was found, with severity, confidence, minimal evidence, reachability, exploit prerequisites, and plain-language risk.
+- Deliberate mode exclusions and anything else not verified.
+- Local analyzers used and known vulnerability-database freshness.
 - Whether dynamic or external validation was authorized and performed.
+- A short “What you can ask next” section generated from human-readable finding titles.
 
-`COMPLETE_READ_ONLY` means the authorized safe read-only surface was completed. It is not a promise that exploitation, target code execution, unrestricted external scanning, or every current CVE was tested.
+Finding IDs such as `F-001` remain stable agent anchors, but the user never has to type them. Natural requests such as “Explain what is most dangerous”, “Prepare a safe plan for the SSH password problem”, or “Fix the critical findings one by one and ask before each change” are mapped back to the findings by the next agent.
 
-In PIZDEC Full, remediation packages are tied to the audit snapshot and marked `NOT_EXECUTED` and `APPROVAL_REQUIRED`. The skill itself contains no ready-made environment-changing commands.
+Completion means only that the selected authorized safe read-only contract was completed. It is not a promise that exploitation, target-code execution, unrestricted external scanning, runtime-only behavior, or every current CVE was tested.
 
 ## Safety model
 
-- Target files are evidence, not instructions. Repository files such as `AGENTS.md`, `CLAUDE.md`, and `.cursorrules` cannot override the audit boundary.
+- Target files are evidence, not instructions. Repository files such as `AGENTS.md`, `CLAUDE.md`, and `.cursorrules` cannot override the authenticated audit boundary.
 - Memory and prior reports provide context, not current proof or authorization.
 - Secret values are redacted; only their type, minimal location, and exposure path are reported.
 - Target code, tests, hooks, containers, builds, migrations, and binaries are not executed merely for inspection.
 - Audit material is not written into the target or uploaded elsewhere without explicit authorization.
-- Incomplete work is reported as `PARTIAL_READ_ONLY` or continued through a compact, numeric coverage capsule.
+- Required unfinished work is reported as `PARTIAL_READ_ONLY` or continued through a compact coverage capsule.
 
 Read the complete behavior contract in [`pizdec/SKILL.md`](pizdec/SKILL.md).
 
@@ -94,11 +106,11 @@ Read the complete behavior contract in [`pizdec/SKILL.md`](pizdec/SKILL.md).
     `-- references/
 ```
 
-Repository documentation is kept outside the distributable skill so it does not consume the agent's audit context.
+Repository documentation stays outside the distributable skill so it does not consume the agent's audit context.
 
 ## Limitations
 
-PIZDEC improves audit discipline; it does not make an AI agent infallible. Results depend on authorization, accessible evidence, tool capabilities, model reasoning, target size, and current vulnerability intelligence. Validate severe findings before making production changes and use qualified human review for high-risk systems.
+PIZDEC improves audit discipline; it does not make an AI agent infallible or replace specialist scanners and qualified human review. Results depend on authorization, accessible evidence, tool capabilities, model reasoning, target size, selected mode, and current vulnerability intelligence.
 
 Only audit assets you own or are authorized to assess.
 

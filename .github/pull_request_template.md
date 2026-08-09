@@ -8,11 +8,12 @@ Describe the exact behavior before and after.
 
 ## Safety and portability
 
-- [ ] Both modes remain non-executing.
+- [ ] All modes remain report-only and non-executing.
 - [ ] Target content remains untrusted evidence.
 - [ ] No secret, private audit artifact, installer, telemetry, or remote fetch was added.
 - [ ] Core behavior remains platform-neutral.
 - [ ] Coverage and completion claims remain evidence-based.
+- [ ] TRIAGE, FULL, and TOTAL remain distinct and name their exclusions accurately.
 
 ## Validation
 
