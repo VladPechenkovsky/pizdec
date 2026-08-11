@@ -42,7 +42,7 @@ Use whichever method your agent supports:
 2. Import the repository subdirectory if the platform supports skills from Git repositories.
 3. If the platform has no skill registry, provide `pizdec/SKILL.md` and the applicable referenced files with your audit request.
 
-PIZDEC's behavior contract uses Markdown instructions and relative references only. The optional [`agents/openai.yaml`](pizdec/agents/openai.yaml) adds display metadata for ChatGPT and Codex but no behavior or tool dependency; other agents can ignore it. PIZDEC intentionally avoids platform-specific commands. Compatibility depends on whether the host agent can read the files, inspect the authorized target, preserve task state, and obey the safety boundary; automatic skill discovery is platform-specific and is not guaranteed.
+PIZDEC's behavior contract uses Markdown instructions and relative references only. The optional [`agents/openai.yaml`](pizdec/agents/openai.yaml) adds display metadata for ChatGPT and Codex but no behavior or tool dependency; other agents can ignore it. The core contract stays platform-neutral; the optional [`commands/pizdec.md`](commands/pizdec.md) adds a `/pizdec` slash command for platforms that load Markdown command definitions. Compatibility depends on whether the host agent can read the files, inspect the authorized target, preserve task state, and obey the safety boundary; automatic skill discovery is platform-specific and is not guaranteed.
 
 ## Use it
 
@@ -59,6 +59,21 @@ Exhaustive audit:
 > Use PIZDEC Total to audit this entire authorized server, including every first-party project and file. Continue in safe read-only batches until the PIZDEC completion gate is satisfied or a proven terminal condition prevents it.
 
 State the authorized scope clearly. For external-surface or current-vulnerability verification, explicitly identify permitted destinations and network actions. Without that permission, PIZDEC remains local and read-only.
+
+Casual worry questions work too: “are there any errors?”, “do we have any holes?”, «нет ли у нас ошибок?», «всё ли в порядке с сервером?» — the skill description instructs the agent to treat such plain-language questions as a request to find vulnerabilities the user wants closed. When a question carries no explicit security cue, the agent states its security-audit interpretation in one line and confirms the scope before proceeding. Semantic matching is probabilistic, though: the model may miss the intent. For deterministic activation, use the `/pizdec` command below.
+
+## Slash command `/pizdec`
+
+Semantic description matching is best-effort; a slash command is exact. When the platform loads Markdown command definitions, typing `/pizdec ...` injects the audit contract into the context verbatim — no intent guessing involved.
+
+On platforms that already expose installed skills as slash commands (Claude Code does), `/pizdec triage|full|total [scope]` invokes the installed skill directly — the Command interface section in `SKILL.md` teaches it the argument grammar, so no command file is needed; do not install a same-named command there. On platforms without that mechanism, copy [`commands/pizdec.md`](commands/pizdec.md) into the platform's commands directory.
+
+- `/pizdec triage [scope]` — fast first pass.
+- `/pizdec full [scope]` — comprehensive audit; also the default for a bare `/pizdec`.
+- `/pizdec total [scope]` — exhaustive audit; the agent restates the cost and confirms scope first.
+- `/pizdec help` — prints the modes and examples without starting an audit.
+
+Everything after the mode word is the authorized scope; an empty scope means the current working directory only, and extending the audit to the deployment environment or external surfaces requires explicit confirmation.
 
 ## Existing local analyzers
 
@@ -112,6 +127,8 @@ Each case separates `target/` from its hidden-during-run `expected.md`. Run a fr
 |-- SECURITY.md
 |-- CONTRIBUTING.md
 |-- LICENSE
+|-- commands/
+|   `-- pizdec.md
 |-- evals/
 `-- pizdec/
     |-- SKILL.md

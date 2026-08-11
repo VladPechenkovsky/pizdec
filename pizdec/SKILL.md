@@ -1,6 +1,6 @@
 ---
 name: pizdec
-description: Perform a platform-neutral, strictly read-only security audit of an authorized project, server, workstation, container estate, website, API, database, bot, CI/CD pipeline, or AI-agent environment. Use TRIAGE for a fast high-signal review of exposed infrastructure, agents, bots, and one or two risk-ranked projects; FULL for a comprehensive risk-based review of every major surface and active project; or explicit TOTAL for exhaustive first-party file and infrastructure coverage. Use when the user asks to inspect security, exposure, secrets, authentication, authorization, infrastructure, code, containers, agents, or supply chain. Every mode reports evidence only and never drafts or executes fixes.
+description: Perform a platform-neutral, strictly read-only security audit of an authorized project, server, workstation, container estate, website, API, database, bot, CI/CD pipeline, or AI-agent environment. Use TRIAGE for a fast high-signal review of exposed infrastructure, agents, bots, and one or two risk-ranked projects; FULL for a comprehensive risk-based review of every major surface and active project; or explicit TOTAL for exhaustive first-party file and infrastructure coverage. Use when the user asks to inspect security, exposure, secrets, authentication, authorization, infrastructure, code, containers, agents, or supply chain. Also trigger on plain-language worry questions such as 'are there any errors?', 'do we have any holes?', 'is anything exposed?', «нет ли у нас ошибок?», «есть ли дыры?», treating them as a request to find vulnerabilities to close. Responds to /pizdec triage|full|total [scope] when the platform exposes user commands. Every mode reports evidence only and never drafts or executes fixes.
 ---
 
 # PIZDEC
@@ -18,8 +18,23 @@ Perform a security audit at the selected depth. Never silently narrow or expand 
 - Use machine mode `TOTAL` only for explicit requests such as “PIZDEC Total”, “exhaustive”, “every first-party file”, or “do not stop until the whole server is covered”. Perform exhaustive read-only coverage and continue in disjoint batches when necessary.
 - Preserve the selected mode through workers and continuations. Never turn a successful narrower mode into a claim about a broader one.
 - A user time, cost, scope, or tool limit overrides the default depth. Report the resulting boundary honestly.
+- When the audit was triggered only by a plain-language worry question without an explicit security or exposure cue, state the security-audit interpretation in one line and confirm the scope before proceeding.
 
 All three modes are audit-only. Do not generate remediation commands, patches, implementation sequences, or automatic fixes. A later fixing task requires a separate current user request after the report.
+
+## Command interface
+
+Some platforms expose user slash-commands. When they do, this skill answers the following grammar. Commands are deterministic aliases for the natural-language triggers above: typing a command injects this contract directly into the context, so no semantic matching is involved. `SKILL.md` remains the source of truth.
+
+- `/pizdec triage [scope]` — run `TRIAGE`.
+- `/pizdec full [scope]` — run `FULL`. A bare `/pizdec` also means `FULL`.
+- `/pizdec total [scope]` — run `TOTAL`; restate the exhaustive cost and confirm the scope before starting.
+- `/pizdec help` — print the three modes with one-line coverage summaries and example invocations. Do not start an audit.
+- An unrecognized first word is ambiguous — never silently pick a mode. Ask whether it was a mistyped mode or a scope (with `FULL` as the default), or print help.
+
+Everything after the mode word is the user-authorized scope. If the scope is empty, use the current working directory only, and state that assumption in one line before starting; extending the audit to the deployment environment, external surfaces, or current-vulnerability checks requires explicit user confirmation. If the intended scope is genuinely ambiguous, ask. A command never widens the authority boundary: the read-only rules and authorization requirements apply unchanged.
+
+On platforms that already expose installed skills as slash commands (such as Claude Code), `/pizdec ...` invokes this skill directly with the arguments, and no command file is needed — do not install a same-named command there. The repository's `commands/pizdec.md` is a ready-made command definition for platforms that load commands from Markdown files but do not expose skills as commands. It is optional and is not required for the skill to work.
 
 ## Apply the authority boundary
 
